@@ -24,6 +24,7 @@ class Warden {
 
     // CALCULATE METHOD #1:
     // RE-CALCULATE EVERY CELL FOR EVERY CYCLE:
+    // Not very efficient. The return statement on line 50 runs 10,000 times to calculate 100 using this method. (aka O(n^2))
 
 //    func state(of cellNumber: Int, afterMoreCycles numberOfCycles: Int) -> CellState {
 //        let index = cellNumber - startingCellNumber
@@ -53,6 +54,8 @@ class Warden {
     // CALCULATE METHOD #2:
     // CALCULATE ONLY FOR THAT CELL (MUCH MORE EFFICIENT THAN #1):
     // Note that this method DOES NOT care how many cells there are total. So technically there could be a fake "bounds check" if needed
+    // Efficiency with 100 is almost instantaneous, (aka O(n))
+    // A cache method would be O(1) for retrieval, but still require O(n) or longer for setup
 
     func state(of cellNumber: Int, afterMoreCycles numberOfCycles: Int) -> CellState {
         if numberOfCycles == 0 {
@@ -103,9 +106,13 @@ subject.state(of: 4, afterMoreCycles: 4)
 
 // Finally answering the Kata question: "How many cells are open after 100 iterations"?
 
+// Something I mentioned in person... notice the extremely small "footprint" for the algorithm itself. Literally 1 line of code
+
 let totalCells = 100
 var openCells = 0
 for cell in 1...totalCells where subject.state(of: cell, afterMoreCycles: totalCells) == .open {
     openCells += 1
 }
 print(openCells)
+
+// Spoiler alert: It's 10
