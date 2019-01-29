@@ -73,6 +73,8 @@ class Warden {
 
 let subject = Warden(cells: 100)
 
+// A demonstration of how it works / "testing" without unit tests, because it's a Playground file:
+
 subject.state(of: 1, afterMoreCycles: 0)
 subject.state(of: 2, afterMoreCycles: 0)
 subject.state(of: 3, afterMoreCycles: 0)
@@ -97,3 +99,13 @@ subject.state(of: 1, afterMoreCycles: 4)
 subject.state(of: 2, afterMoreCycles: 4)
 subject.state(of: 3, afterMoreCycles: 4)
 subject.state(of: 4, afterMoreCycles: 4)
+
+
+// Finally answering the Kata question: "How many cells are open after 100 iterations"?
+
+let totalCells = 100
+var openCells = 0
+for cell in 1...totalCells where subject.state(of: cell, afterMoreCycles: totalCells) == .open {
+    openCells += 1
+}
+print(openCells)
